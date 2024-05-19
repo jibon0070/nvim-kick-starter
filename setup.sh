@@ -6,13 +6,27 @@ if [[ $EUID -ne 0 ]]; then
 	exit 1
 fi
 
-isInstalled() {
-	local output=$(apt-cache search $1 | grep "^$1\s" | wc -l)
-	if [[ $output -gt 0 ]]; then
-		return 0
+function isInstalled {
+	if ! [ -v 1 ]; then
+		echo "No package name given."
+		exit 1
 	fi
-	return 1
+	if [ -v 2 ]; then
+		pattern=$2
+	else
+		pattern="^$1\s"
+	fi
+	if [ -v 3 ]; then
+		count=$3
+	else
+		count=1
+	fi
+	if ! [ $(apt-cache search $1 | grep $pattern | wc -l) -ge $count ]; then
+		return 1
+	fi
+	return 0
 }
+export -f isInstalled
 
 if ! isInstalled nala; then
 	echo "installing nala"
