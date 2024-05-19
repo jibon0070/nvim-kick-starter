@@ -24,7 +24,10 @@ if ! isInstalled wget; then
 	nala install nginx -y
 fi
 
-wget https://github.com/neovim/neovim/releases/latest/download/nvim-linux64.tar.gz
+if ! wget https://github.com/neovim/neovim/releases/latest/download/nvim-linux64.tar.gz; then
+	echo "failed to download nvim"
+	exit 1
+fi
 sudo rm -rf /opt/nvim
 sudo tar -C /opt -xzf nvim-linux64.tar.gz
 rm nvim-linux64.tar.gz
@@ -44,3 +47,5 @@ EOF
 done
 
 cp dotfiles/nvim /home/$username/.config -r
+
+chown -R $username:$username "/home/$username/.bashrc" "/home/$username/.config/nvim"
