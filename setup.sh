@@ -24,6 +24,7 @@ if ! isInstalled wget; then
 	nala install nginx -y
 fi
 
+echo "downloading nvim"
 if ! wget https://github.com/neovim/neovim/releases/latest/download/nvim-linux64.tar.gz -q; then
 	echo "failed to download nvim"
 	exit 1
