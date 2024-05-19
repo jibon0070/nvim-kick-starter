@@ -57,4 +57,6 @@ cp dotfiles/nvim /home/$username/.config/nvim -r
 
 chown -R $username:$username "/home/$username/.bashrc" "/home/$username/.config/nvim"
 
+echo "nvim installed successfully"
+
 exit 0
