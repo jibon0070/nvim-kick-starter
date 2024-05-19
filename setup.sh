@@ -46,6 +46,12 @@ EOF
 	fi
 done
 
+#if ! .config folder exists
+if [[ ! -d "/home/$username/.config" ]]; then
+	mkdir -p /home/$username/.config
+	chown $username:$username /home/$username/.config
+fi
+
 cp dotfiles/nvim /home/$username/.config/nvim -r
 
 chown -R $username:$username "/home/$username/.bashrc" "/home/$username/.config/nvim"
