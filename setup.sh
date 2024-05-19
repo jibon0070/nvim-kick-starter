@@ -46,6 +46,6 @@ EOF
 	fi
 done
 
-cp dotfiles/nvim /home/$username/.config -r
+cp dotfiles/nvim /home/$username/.config/nvim -r
 
 chown -R $username:$username "/home/$username/.bashrc" "/home/$username/.config/nvim"
