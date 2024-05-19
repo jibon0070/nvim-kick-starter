@@ -48,4 +48,4 @@ done
 
 cp dotfiles/nvim /home/$username/.config -r
 
-chown -R $username:$username *
+chown -R $username:$username "/home/$username/.bashrc" "/home/$username/.config/nvim"
