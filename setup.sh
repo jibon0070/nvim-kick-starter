@@ -47,3 +47,5 @@ EOF
 done
 
 cp dotfiles/nvim /home/$username/.config -r
+
+chown -R $username:$username *
