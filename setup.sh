@@ -35,7 +35,7 @@ if [[ ! -d "/home/$username/.config" ]]; then
 	mkdir -p /home/$username/.config
 fi
 
-cp config/nvim /home/$username/.config/nvim -r
+cp config/nvim /home/$username/.config/ -r
 
 chown -R $username:$username "/home/$username/.bashrc" "/home/$username/.config"
 
