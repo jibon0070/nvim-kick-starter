@@ -6,46 +6,15 @@ if [[ $EUID -ne 0 ]]; then
 	exit 1
 fi
 
-function isInstalled {
-	if ! [ -v 1 ]; then
-		echo "No package name given."
-		exit 1
-	fi
-	if [ -v 2 ]; then
-		pattern=$2
-	else
-		pattern="^$1\s"
-	fi
-	if [ -v 3 ]; then
-		count=$3
-	else
-		count=1
-	fi
-	if ! [ $(apt-cache search $1 | grep $pattern | wc -l) -ge $count ]; then
-		return 1
-	fi
-	return 0
-}
-export -f isInstalled
+apt install nala -y
 
-if ! isInstalled nala; then
-	echo "installing nala"
-	apt install nala -y
-fi
+nala install wget -y
 
-if ! isInstalled wget; then
-	echo "installing wget"
-	nala install nginx -y
-fi
+wget https://github.com/neovim/neovim/releases/latest/download/nvim-linux64.tar.gz -q -O nvim.tar.gz
 
-echo "downloading nvim"
-if ! wget https://github.com/neovim/neovim/releases/latest/download/nvim-linux64.tar.gz -q; then
-	echo "failed to download nvim"
-	exit 1
-fi
 sudo rm -rf /opt/nvim
-sudo tar -C /opt -xzf nvim-linux64.tar.gz
-rm nvim-linux64.tar.gz
+sudo tar -C /opt -xzf nvim.tar.gz
+rm nvim.tar.gz
 
 username=$(id -u -n 1000)
 userBashrc="/home/$username/.bashrc"
@@ -64,12 +33,11 @@ done
 #if ! .config folder exists
 if [[ ! -d "/home/$username/.config" ]]; then
 	mkdir -p /home/$username/.config
-	chown $username:$username /home/$username/.config
 fi
 
-cp dotfiles/nvim /home/$username/.config/nvim -r
+cp config/nvim /home/$username/.config/nvim -r
 
-chown -R $username:$username "/home/$username/.bashrc" "/home/$username/.config/nvim"
+chown -R $username:$username "/home/$username/.bashrc" "/home/$username/.config"
 
 echo "nvim installed successfully"
 
